@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:lib="clr-namespace:App01.lib"
+             x:Class="App01.MainPage">
+   
+        <StackLayout VerticalOptions="Center">
+            
+            <Entry x:Name="TxbNomeCarlos" Placeholder="Digite seu nome" Text="">
+
+                <!-- Coloca tudo em maiusculo  -->
+                <Entry.Behaviors>
+                    <lib:MaiusculoBehavior />
+                </Entry.Behaviors>
+
+                <!-- Altera cor de fundo e da letra -->
+                <Entry.Triggers>
+                    <Trigger TargetType="Entry" Property="IsFocused" Value="true">
+                        <Setter Property="BackgroundColor" Value="blue"></Setter>
+                        <Setter Property="TextColor" Value="white"></Setter>
+                    </Trigger>
+                    <Trigger TargetType="Entry" Property="IsFocused" Value="false">
+                        <Setter Property="BackgroundColor" Value="green"></Setter>
+                        <Setter Property="TextColor" Value="yellow"></Setter>
+                    </Trigger>
+                </Entry.Triggers>
+            </Entry>
+            
+            <Entry x:Name="TxtEmail" Placeholder="digite seu email">
+                
+                <!-- trigger baseado em eventos -->
+                <Entry.Triggers>
+                    <EventTrigger Event="TextChanged">
+                        <lib:EmailValidoTrigger />
+                    </EventTrigger>
+                </Entry.Triggers> 
+            </Entry>
+
+        <Button Text="Enviar !">
+           
+            <!--  desabilitar o botão se o entry for vazio  -->
+            <Button.Triggers>
+                
+                <!-- trigger baseado em dados  -->
+                <DataTrigger TargetType="Button" Binding="{Binding Source={x:Reference TxbNomeCarlos}, Path=Text.Length}"  Value="0" >
+                    
+                    <Setter Property="TextColor" Value="white"></Setter>
+                    <Setter Property="BackgroundColor" Value="Gray"></Setter>
+                    <Setter Property="IsEnabled" Value="false"></Setter>
+
+                </DataTrigger>
+            </Button.Triggers>
+        </Button>
+        </StackLayout>
+    
+</ContentPage>
+
+
+<!-- 
+            Trigger pode ser implementado direto no axml  
+    
+            ::::::::::  TextBox    ::::::
+            
+            comportamento da trigger quando esta em foco
+            backgrund Azul e texto branco
+    
+            comportamento se foco 
+            background Verde e letra amarela
+    
+            logica: 
+                    Ele analisa a propriedade "IsFocused"
+    
+            obs. O Entry não possuir em sua classe a propriedade IsFocused, mas como entry herda assa propriedade de VisualElement
+    
+            classe VisualElement https://developer.xamarin.com/api/type/Xamarin.Forms.VisualElement/
+    
+    
+           :::::::    Button     :::::::
+    
+            Button deve estar desabilitado pela propriedade IsEnabled
+            cor do botão gray
+            Texto branco
+            o Entry deve ser iniciado com valor "" para o botão inicial desabilitado
+    
+             <DataTrigger
+                    TargetType="Button"                                     => botão e quem dispara o trigger
+                    Binding="{Binding Source={x:Reference txbNomeCarlos},   => binding atraves do nome do entry
+                    Path=Text.Length}"                                      => lenght da propriedade string 
+                    Value="0"                                               => inicia com value em 0
+              ></DataTrigger>
+    
+    
+    
+-->
+    
