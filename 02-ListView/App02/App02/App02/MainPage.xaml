@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:App02.TemplateCustomizado"
+             x:Class="App02.MainPage">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:SeletorTemplateCarlos x:Key="SeletorPessoa" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout>
+
+        <!--<ListView x:Name="ListaFuncionarios" IsGroupingEnabled="True" GroupDisplayBinding="{Binding Titulo}" GroupShortNameBinding="{ Binding TituloCurto}">-->
+        <ListView x:Name="ListaFuncionarios" IsGroupingEnabled="True" ItemTemplate="{StaticResource SeletorPessoa}" >
+
+            <!-- cabeçalho -->
+
+            <ListView.Header>
+                <Label Text="Cabeçalho dentro da lista!"
+                           VerticalOptions="CenterAndExpand" 
+                           HorizontalOptions="CenterAndExpand" />
+            </ListView.Header>
+
+            <!-- conteudo -->
+            <ListView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Margin="15,0,0,0">
+
+                            <Label Text="{ Binding Titulo }"></Label>
+                            <Label Text="{ Binding Descricao }" TextColor="LightGray"></Label>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.GroupHeaderTemplate>
+
+            <!--<ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Nome}"></TextCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>-->
+
+            <!--rodapé-->
+            <ListView.Footer>
+                <Label Text="Rodape dentro da lista"
+                           VerticalOptions="CenterAndExpand" 
+                           HorizontalOptions="CenterAndExpand" />
+            </ListView.Footer>
+        </ListView>
+    </StackLayout>
+
+</ContentPage>
